@@ -1,0 +1,611 @@
+@import 'templates/base';
+@import 'templates/utils';
+@import 'templates/variables';
+@import 'templates/mixins';
+@import 'templates/easing';
+@import 'templates/animations';
+@import 'templates/device_orientation';
+@import 'templates/splash_screen';
+@import 'templates/status_bar';
+@import 'templates/nano_scroller';
+
+$black: #000;
+$white: #fff;
+$blue: #1074C2;
+
+$zindex-indicators:     9000; //underneath the hotspot annotations
+$zindex-surface-halo:   9001;
+$vjs-z:                 10000;
+
+$zindex-status-bar:     $vjs-z + 4;
+$zindex-cards-scrim:    $vjs-z + 5;
+$zindex-card-nav:       $vjs-z + 6;
+$zindex-card:           $vjs-z + 7;
+$zindex-splash-screen:  $vjs-z + 8;
+$zindex-device-screen:  $vjs-z + 9;
+$zindex-card-active:    $vjs-z + 10;
+
+// TODO: don't include this if 'walmart'
+
+
+// hide full screen button
+.vjs-fullscreen-control { display: none; }
+.vjs-volume-control { margin-right: 20px; }
+
+
+// crappy solution for our lack of a portrait splash image
+.splash-screen {
+  background-size: contain;
+  background-position: center center;
+}
+
+#rotate-svg {
+  display: inline-block;
+  width: 40px;
+  fill: white;
+  opacity: 0.7;
+  margin: 9px;
+  vertical-align: top;
+  margin-right: 14px;
+}
+#rotate-device-msg {
+  display: none;
+  span {
+    vertical-align: top;
+  }
+}
+
+
+.double-pulse {
+  $dur: 800ms;
+  -webkit-animation-duration: $dur;
+  -moz-animation-duration: $dur;
+  -ms-animation-duration: $dur;
+  -o-animation-duration: $dur;
+  animation-duration: $dur;
+}
+
+
+// MOBILE FIRST! Note media queries at bottom.
+.mobilecards {
+
+  color: $white;
+
+  // style ID stuff
+  &.walmart {
+    color: $black;
+
+    [class^="status-bar__text"] {
+      color: $white;
+      text-transform: none;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .splash-screen {
+      .splash__text {
+        top: 38%;
+      }
+    }
+
+    .indicator {
+      @include transition(transform .4s $easeOut);
+      &.active {
+        @include rotate(-180);
+      }
+    }
+
+    .card-content {
+      width: 50%;
+    }
+
+    .card {
+      width: 520px;
+      height: 260px;
+
+      .btn-close {
+        top: -20px;
+        right: -20px;
+
+        .ring {
+          background-color: $black;
+          border-color: $black;
+        }
+      }
+
+      .card-title {
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      .card-subtitle {
+        margin: 0.1em 0 0.5em 0;
+        color: $blue;
+        font-size: 28px;
+      }
+
+      .card-desc {
+        font-size: 13px;
+        width: 100%;
+      }
+
+      .card-cta {
+        font-size: 20px;
+        font-weight: bold;
+        background-color: #ff9900;
+        color: $white;
+        border-radius: 8px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+
+        // der
+        width: 228px;
+        position: absolute;
+        bottom: 16px;
+      }
+    }
+  }
+
+  &.surface {
+
+    .status-bar {
+      @include transition(color .2s $easeOut);
+
+      [class^="status-bar__text"] {
+        color: $blue;
+        font-weight: normal;
+        font-size: 24px;
+        text-transform: none;
+      }
+
+      // used in halo effect
+      &.animate-in {
+        [class^="status-bar__text"] {
+          color: $white;
+        }
+      }
+
+      &.animate-out {
+        [class^="status-bar__text"] {
+          color: $blue;
+        }
+      }
+    }
+
+    // no play button on splash screens
+    .splash-screen {
+      .splash__text {
+        display: none;
+      }
+    }
+
+    .card {
+      width: 520px;
+      height: 260px;
+
+      .card-title {
+        margin-top: -5px;
+      }
+
+      .card-desc {
+        line-height: 1.2em;
+      }
+
+      .card-cta {
+        background-color: $white;
+        color: $blue;
+        margin-top: 10px;
+        padding: 8px 25px;
+      }
+      .card-surface-logo {
+        width: 100%;
+        height: 70px;
+        background: url(../img/ms-surface-pro-3-logo-outlines.svg) 0 0 no-repeat;
+        background-size: contain;
+      }
+    }
+
+    // the cool triple blue rings that highlight the Surface at the start of the video
+    .ms-surface-halo {
+      position: absolute;
+      top: -28%;
+      left: -105%;
+      z-index: $zindex-surface-halo;
+
+      pointer-events: none;
+
+      width: 275%;
+      height: 800px;
+
+      background: url(../img/ms-surface-halo.svg) 0 0 no-repeat;
+      background-size: contain;
+      background-blend-mode: multiply;
+
+      @include opacity(0);
+      @include transition(all .4s $easeInQuad);
+
+      transform-origin: 75% 50%;
+      transform: scale3d(5, 5, 1) translateX(-12%);
+
+      &.animate-in {
+        @include opacity(.78);
+        transform: scale3d(1, 1, 1) translateX(0%);
+      }
+      &.animate-out {
+        @include opacity(0);
+      }
+    }
+  }
+
+
+  // Common
+  .btn {
+    padding: 12px 20px;
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  // Components
+  .splash-screen {
+    z-index: $zindex-splash-screen;
+  }
+
+  .status-bar {
+    z-index: $zindex-status-bar;
+  }
+
+  .device-orientation-screen {
+    z-index: $zindex-device-screen;
+  }
+
+
+  // UI
+  .cards-layer {
+    display: none;
+    &.active {
+      display: block;
+    }
+
+    .cards-scrim {
+      position: absolute;
+      z-index: $zindex-cards-scrim;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: $black;
+      @include opacity(0.8);
+    }
+
+    .card-nav {
+      position: absolute;
+      z-index: $zindex-card-nav;
+      top: 50%;
+
+      cursor: pointer;
+
+      width: 40px;
+      height: 40px;
+
+      &.nav-left {
+        left: 2%;
+        // TODO: improve the mixin so we can pass multiple transforms
+        -webkit-transform: scaleX(-1) rotate(45deg);
+        -moz-transform: scaleX(-1) rotate(45deg);
+        -ms-transform: scaleX(-1) rotate(45deg);
+        -o-transform: scaleX(-1) rotate(45deg);
+        transform: scaleX(-1) rotate(45deg);
+      }
+      &.nav-right {
+        right: 2%;
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        transform: rotate(45deg);
+      }
+
+      .arrow {
+        padding: 10px;
+        width: 20px;
+        height: 20px;
+        border-right: 5px solid white;
+        border-top: 5px solid white;
+      }
+    }
+  }
+
+  .card {
+    position: absolute;
+    z-index: $zindex-card;
+    top: 50%;
+    left: 50%;
+    @include translate(-50%, -50%);
+
+    width: 580px;
+    height: 290px;
+
+    background-color: $white;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-size: cover;
+
+
+    display: block;
+    @include opacity(0);
+    @include transition(all 300ms $easeOut);
+    &.active {
+      z-index: $zindex-card-active;
+      @include opacity(1);
+      @include translate(-50%, -50%);
+    }
+    &.stage-left {
+      @include translate(-250%, -50%);
+    }
+    &.stage-right {
+      @include translate(150%, -50%);
+    }
+
+    .btn-close {
+      cursor: pointer;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      width: 40px;
+      height: 40px;
+
+      .ring {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 20px;
+        height: 20px;
+        border: 2px solid white;
+        border-radius: 50%;
+
+        &:before,
+        &:after {
+          content: '';
+          background: white;
+          width: 2px;
+          height: 11px;
+          position: absolute;
+          top: 2px;
+          left: 7px;
+        }
+        &:before {
+          @include rotate(-45);
+        }
+        &:after {
+          @include rotate(45);
+        }
+      }
+    }
+
+    .card-content {
+      padding: 15px;
+    }
+
+    .card-title {
+      font-size: 18px;
+    }
+
+    .card-desc {
+      font-size: 16px;
+      margin-bottom: 0.5em;
+      width: 50%;   //default that can be overridden via input
+    }
+
+    .card-image {
+      padding: 16px;
+      width: 50%;
+      a {
+        display: block;
+      }
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    .card-cta {
+      font-size: 13px;
+      padding: 5px 12px;
+    }
+  }
+
+  .indicators-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: $zindex-indicators;
+
+    .indicator {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+
+      &.walmart {
+        background-size: contain;
+      }
+
+      &.surface {
+        @extend .pulse;
+        -webkit-animation-duration: 800ms;
+        -moz-animation-duration: 800ms;
+        animation-duration: 800ms;
+        -webkit-animation-iteration-count: infinite;
+        -moz-animation-iteration-count: infinite;
+        animation-iteration-count: infinite;
+
+        &, & > * {
+          border-radius: 50%;
+        }
+
+        .inner0 {
+          width: 50%;
+          height: 50%;
+          border: 6px solid $blue;
+          background-color: $blue;
+          @include translate(50%, 50%);
+        }
+        .inner1 {
+          width: 75%;
+          height: 75%;
+          border: 8px solid $blue;
+          @include translate(17.5%, -50%);
+          @include opacity(0.5);
+        }
+        .inner2 {
+          width: 100%;
+          height: 100%;
+          border: 6px solid $blue;
+          @include translate(0%, -125%);
+          @include opacity(0.15);
+        }
+      }
+    }
+  }
+}
+
+
+// special media q for mobile portrait mode
+@media all and (max-width: 580px) {
+  .mobilecards {
+
+    .card {
+      .card-content,
+      .card-image {
+        padding: 10px;
+      }
+    }
+
+    &.walmart,
+    &.surface {
+      .card {
+        width: 330px;
+        height: 165px;
+      }
+    }
+
+    &.walmart {
+      .card {
+        .card-title {
+          font-size: 10px;
+        }
+        .card-subtitle {
+          font-size: 22px;
+          margin-bottom: 0.1em;
+        }
+        .card-desc {
+          font-size: 8px;
+        }
+        .card-cta {
+          padding-top: 5px;
+          padding-bottom: 5px;
+          width: 136px;
+          font-size: 12px;
+          bottom: 10px;
+        }
+      }
+    }
+
+    &.surface {
+      .card {
+        .card-surface-logo {
+          height: 30px;
+        }
+        .card-title {
+          font-size: 12px;
+        }
+        .card-desc {
+          font-size: 8px;
+        }
+        .card-cta {
+          font-size: 11px;
+        }
+      }
+    }
+  }
+}
+
+// another for really small portrait
+@media all and (max-width: 420px) {
+  .mobilecards {
+    .cards-layer.active {
+      .card-nav {
+        display: none;
+      }
+    }
+  }
+}
+@media all and (max-width: 320px) {
+  .mobilecards {
+    &.walmart,
+    &.surface {
+      .card {
+        width: 305px;
+        height: 165px;
+      }
+    }
+    &.surface {
+      .card {
+        .card-cta {
+          width: 130px;
+        }
+      }
+    }
+  }
+}
+
+
+@media all and (min-width: $tablet-min-width) {
+  .mobilecards {
+    .card {
+      width: 600px !important;  //ugh, well, cuz we have the mobilecards.walmart styles at top
+      height: 300px !important;
+
+      .card-cta {
+        width: 266px !important;
+      }
+
+      .card-desc {
+        font-size: 16px !important;
+      }
+    }
+  }
+}
+
+
+@media all and (min-width: $desktop-min-width) {
+  .mobilecards {
+
+  }
+}
+
+
+
+@media only screen
+and (max-device-width : 580px)
+and (orientation : portrait) {
+  .mobilecards.surface,
+  .mobilecards.walmart {
+    #rotate-device-msg{
+      display: block;
+      width: 100%;
+      height: 50px;
+      background-color: rgba(0,0,0,0.8);
+      color: white;
+      position: absolute;
+      z-index: 99999;
+      top:80%;
+      left:0;
+      right:0;
+      line-height: 50px;
+      text-align: left;
+      font-weight: bold;
+      border-bottom: 1px solid #333;
+    }
+  }
+}

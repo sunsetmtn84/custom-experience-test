@@ -1,0 +1,73 @@
+- var ui = project.ui_attributes;
+- var custom_data = JSON.parse(unescape(experience.layout.custom_data));
+- console.log(custom_data);
+
+script.
+  window.fmPlayerType = 'custom';
+
+
+if ui.splash_screen_url
+  style.
+    .splash-screen {
+      background-image: url(#{ui.splash_screen_url});
+    }
+
+#template_container.mobilecards(data-style-id='surface', class='surface')
+
+  .splash-screen.show-splash
+    .splash__text
+      .splash__title!= title
+        .splash__title__inner
+      .splash__btn-play-wrapper
+        .splash__btn-play
+          svg(xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink', xmlns:sketch='http://www.bohemiancoding.com/sketch/ns', width='20px', height='24px', viewBox='0 0 20 24', version='1.1')
+            g#Page-1(stroke='none', stroke-width='1', fill='none', fill-rule='evenodd', sketch:type='MSPage')
+              g#splash-svg-play-button(sketch:type='MSLayerGroup', transform='translate(5.000000, 6.000000)', fill='#FFFFFF')
+                path#Shape(d='M-5,-6 L15,6 L-5,18 L-5,-6 Z', sketch:type='MSShapeGroup')
+      .splash__subtitle!= subtitle
+      .splash__cta!= cta
+
+  .cards-layer
+
+    .cards-scrim
+
+    .card-nav.nav-left
+      .arrow
+    .card-nav.nav-right
+      .arrow
+
+    - each item in project.items
+
+      //- render nothing for link-out item types
+      unless item.attributes.content_type == 'link'
+
+        if item.attributes.image_style == 'background'
+          style.
+            .card#{item._id} {
+              background-image: url('#{item.attributes.image_src}');
+            }
+
+        .card(data-item-id='#{item._id}', class='card#{item._id}')
+
+          .btn-close
+            .ring
+
+          //- aw fuck
+          - var imgStyle = item.attributes.image_style;
+          - var contentFloat = imgStyle == 'background' ? 'none' : imgStyle == 'left' ? 'right' : 'left';
+          .card-content(style='float: #{contentFloat}')
+
+            .card-title(style="color:#333;") Title
+
+            .card-subtitle(style="color:#333;")  Subtitle
+
+            .card-desc(style="color:#333;")  Description
+
+          unless item.attributes.image_style == 'background'
+            .card-image(style='float: #{item.attributes.image_style}', data-href="#{item.attributes.cta_url}")
+              img(src='#{custom_data.url}')
+
+  .indicators-layer
+
+
+
