@@ -1,7 +1,11 @@
 
-var MobileCards = function(player) {
-
-  var CLICK,
+window.FuiszPlayerLayout = function(player) {
+  console.log("the player is ");
+  console.log(player);
+  this.initialize = function() {
+    console.log("in initialize mnethoid");
+  }
+/*  var CLICK,
       INDIC_Y_THRESH,
       ACTIVE = 'active';
 
@@ -127,6 +131,7 @@ var MobileCards = function(player) {
     }
 
     $splash.on(CLICK, function() {
+      console.log("in splash screen click");
       $splash.removeClass('show-splash');
       player.play();
     });
@@ -372,20 +377,16 @@ var MobileCards = function(player) {
     player.track('interaction', {
       action: customEventName
     });
-  }
+  } */
 };
 
+/*console.log("In old studio");
+console.log("Old studio config object", window.player);
 
-console.log("Old studio config object", window.p);
-
-var player = new window.FuiszPlayer(window.p);
-var ui = new MobileCards(player);
+var player = new window.FuiszPlayer(window.player);
+var ui = new FuiszPlayerLayout(player);
 ui.init();
 player.initialize();
 
-//legacy support for some things in the vendor player wrappers, elsewhere
-// TODO: change global player var to something better than window.player. Will need to
-//        make this change in mediaelement wrapper, metadata.js (lightbox), etc.
-//        It's all over the place.
 
-window.player = player;
+window.player = player;*/

@@ -1,6 +1,6 @@
 - var ui = project.ui_attributes;
-- var custom_data = JSON.parse(unescape(experience.layout.custom_data));
-- console.log(custom_data);
+- var custom_data = experience.layout.custom_data;
+- console.log("the custom data is ", custom_data);
 
 script.
   window.fmPlayerType = 'custom';
@@ -68,6 +68,3 @@ if ui.splash_screen_url
               img(src='#{custom_data.url}')
 
   .indicators-layer
-
-
-
