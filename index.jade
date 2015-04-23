@@ -1,18 +1,16 @@
 - var ui = project.ui_attributes;
 - var custom_data = experience.layout.custom_data;
-- console.log("the custom data is ", custom_data);
-
+- console.log("custom project items are ");
+- console.log(project.items);
 script.
   window.fmPlayerType = 'custom';
 
+style.
+  .splash-screen {
+    background-image: url('http://gallery.fuiszmedia.com.s3.amazonaws.com/gillette/548f727c4ae22d040007bd69/Gilletesplash_splash_text_center.jpg');
+  }
 
-if ui.splash_screen_url
-  style.
-    .splash-screen {
-      background-image: url(#{ui.splash_screen_url});
-    }
-
-#template_container.mobilecards(data-style-id='surface', class='surface')
+#template_container(class='gmc')
 
   .splash-screen.show-splash
     .splash__text
@@ -28,43 +26,37 @@ if ui.splash_screen_url
       .splash__cta!= cta
 
   .cards-layer
-
     .cards-scrim
-
     .card-nav.nav-left
       .arrow
     .card-nav.nav-right
       .arrow
+    .card.comparison(data-item-id="5537d41b8ca75687caee7d98")
+      .btn-close
+        .ring
+      #comparison.show-tooltip(style="height:100%")
+        figure(style="background-image:url(548f727c4ae22d040007bd69/gillette-flexball.jpg)")
+          #divisor(style="width: 50%; background-image: url(http://gallery.fuiszmedia.com/gillette/548f727c4ae22d040007bd69/gillette-proglide.jpg);")
+        input#slider(type="range", min="0", max="100", value="50", oninput="moveDivisor()")
+    .card.card(data-item-id="5537d4248ca75687caee7d99", style="background-image: url(548f727c4ae22d040007bd69/card-feature.jpg)")
+      .btn-close
+        .ring
+      .card-content(style="float: left; width:50%")
+        .card-title FLEXBALL&#8482; TECHNOLOGY
+        .card-desc The Fusion ProGlide razor with New FlexBall Technology makes maximum contact
+        .card-cta.btn(data-href="http://gillette.com/en-us/products/razor-blades/fusion-proglide-flexball-razors/fusion-proglide-power-razor-with-flexball?utm_source=FM&utm_medium=FacebookVideo&utm_content=Flexball&utm_campaign=Interactive") Learn More
+    .card.video(data-item-id="5537d42c8ca75687caee7d9a")
+      .btn-close
+        .ring
+      video#subvideo(style="top:0px;left:0px;position:absolute;width:100%;height:100%;background-color:black;", webkit-playsinline="")
+        source(src="548f727c4ae22d040007bd69/Gillette_VideoInVideo_NoEndCard.mp4")
+    .card.card(data-item-id="5537d4358ca75687caee7d9b", style="background-image: url(548f727c4ae22d040007bd69/card-subscription.jpg)")
+      .btn-close
+        .ring
+      .card-content(style="float: right; width:50%;")
+        .card-title GILLETTE SUBSCRIPTION
+        .card-desc Get Gillettes best razor blades delivered to your door when you need them
+        .card-cta.btn(data-href="http://subscription.gillette.com/?utm_source=FM&utm_medium=FacebookVideo&utm_content=Subscription&utm_campaign=Interactive") Choose Plan
 
-    - each item in project.items
-
-      //- render nothing for link-out item types
-      unless item.attributes.content_type == 'link'
-
-        if item.attributes.image_style == 'background'
-          style.
-            .card#{item._id} {
-              background-image: url('#{item.attributes.image_src}');
-            }
-
-        .card(data-item-id='#{item._id}', class='card#{item._id}')
-
-          .btn-close
-            .ring
-
-          //- aw fuck
-          - var imgStyle = item.attributes.image_style;
-          - var contentFloat = imgStyle == 'background' ? 'none' : imgStyle == 'left' ? 'right' : 'left';
-          .card-content(style='float: #{contentFloat}')
-
-            .card-title(style="color:#333;") Title
-
-            .card-subtitle(style="color:#333;")  Subtitle
-
-            .card-desc(style="color:#333;")  Description
-
-          unless item.attributes.image_style == 'background'
-            .card-image(style='float: #{item.attributes.image_style}', data-href="#{item.attributes.cta_url}")
-              img(src='#{custom_data.url}')
 
   .indicators-layer

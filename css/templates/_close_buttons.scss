@@ -1,0 +1,147 @@
+@import 'templates/mixins';
+@import 'templates/variables';
+@import 'templates/easing';
+
+$animDur: .1s;
+
+@mixin closeButtonBase() {
+  &.close-btn,
+  .close-btn {
+    position: absolute;
+    cursor: pointer;
+  }
+}
+
+@mixin closeButtonCircleX() {
+  &.close-btn-style-circle_x,
+  .close-btn.close-btn-style-circle_x {
+    $hit-size: 44px;
+    $circle-size: 30px;
+    top: -$hit-size/2;
+    right: -$hit-size/2;  // defaults to top-right
+    width: $hit-size;
+    height: $hit-size;
+    cursor: pointer;
+
+    &.top-left {
+      right: auto;
+      left: -$hit-size/2;
+    }
+    &.frame-top-left {
+      right: auto;
+      left: 0;
+    }
+
+    .circle {
+      position: absolute;
+      top: ($hit-size - $circle-size) / 2;
+      right: ($hit-size - $circle-size) / 2;
+      width: $circle-size;
+      height: $circle-size;
+      border-radius: 50%;
+      color: $white;
+      background-color: $black;
+      border: 2px solid $white;
+      @include transition(border-color $animDur $easeOut);
+      &:before,
+      &:after {
+        content: '';
+        background: $white;
+        width: 2px;
+        height: $circle-size/2;
+        position: absolute;
+        top: 5px; // derp - make a better css close btn if we're even sticking w/ this design
+        left: 12px;
+        @include transition(background-color $animDur $easeOut);
+      }
+      &:before {
+        @include rotate(-45);
+      }
+      &:after {
+        @include rotate(45);
+      }
+    }
+  }
+}
+
+
+@mixin closeButtonX() {
+  &.close-btn-style-x,
+  .close-btn.close-btn-style-x {
+    $size: 40px;
+    top: 0;
+    right: 0;   // top-right default
+    width: $size;
+    height: $size;
+
+    &.top-left,
+    &.frame-top-left {
+      right: auto;
+      left: 0;
+    }
+
+    &:before,
+    &:after {
+      content: '';
+      background: $white;
+      width: 2px;
+      height: $size/2;
+      position: absolute;
+      top: $size/4;
+      left: $size/2;
+      @include transition(background-color $animDur $easeOut);
+    }
+    &:before {
+      @include rotate(-45);
+    }
+    &:after {
+      @include rotate(45);
+    }
+  }
+}
+
+
+@mixin closeButtonXText() {
+  &.close-btn-style-x_text,
+  .close-btn.close-btn-style-x_text{
+    $size: 40px;
+    top: 0;
+    right: 0;   // top-right default
+    width: $size;
+    height: $size;
+
+    &.top-left,
+    &.frame-top-left {
+      right: auto;
+      left: 0;
+    }
+
+    &:before,
+    &:after {
+      content: '';
+      background: $white;
+      width: 2px;
+      height: $size/2;
+      position: absolute;
+      top: $size/4;
+      left: $size/2;
+      @include transition(background-color $animDur $easeOut);
+    }
+    &:before {
+      @include rotate(-45);
+    }
+    &:after {
+      @include rotate(45);
+    }
+    .close-btn-copy{
+      position:absolute;
+      top:12px;
+      right:40px;
+      color: white;
+      font-size: 16px;
+      @include transition(color $animDur $easeOut);
+    }
+  }
+}
+
+

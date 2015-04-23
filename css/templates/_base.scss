@@ -1,0 +1,58 @@
+@import 'templates/variables';
+@import 'templates/mixins';
+
+/*------------------------------------*\
+    RESET STYLES
+\*------------------------------------*/
+
+/* apply a natural box layout model to all elements */
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+
+/*------------------------------------*\
+    BASE
+\*------------------------------------*/
+
+html, body {
+  position: relative;
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: black;
+  font-family: $helv;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+
+
+.fuisz-rect {
+  position: absolute;
+  vertical-align: middle;
+  display: table-cell;
+  cursor: pointer;
+
+  &.is-debug {
+    border: 2px solid #60fc14;
+    color: #00ff00;
+    background-color: rgba(0,0,0,0.3);
+    font-size: 16rem;
+    font-family: monospace;
+  }
+
+  &.is-inactive {
+    cursor: default;
+    &.is-debug {
+      color: grey;
+      border-color: grey;
+      @include opacity(0.75);
+    }
+  }
+}

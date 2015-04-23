@@ -1,0 +1,137 @@
+/**
+ *
+ * Scrim, close button and left/right nav buttons for cards (or whatever)
+ *
+ */
+
+ .modals_layer__btn-close {
+  cursor: pointer;
+  transition: all 100ms linear;
+  position: absolute;
+  top: 12px;
+  right: 10px;
+  height: 30px;
+  width: 30px;
+  opacity: 0.5;
+  z-index: 9999999999;
+}
+
+.modals_layer__btn-close:hover {
+  opacity: 1;
+}
+
+.modals_layer__btn-close .btn-close-line {
+  position: absolute;
+  width: 2px;
+  height: 30px;
+  background-color: white;
+  position: absolute;
+  top: 0;
+  right: 50%;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.modals_layer__btn-close .btn-close-line:nth-child(2) {
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.modals_layer__btn-next,
+.modals_layer__btn-prev {
+  position: absolute;
+  top: 50%;
+  height: 40px;
+  width: 40px;
+
+  transition: transform 150ms linear;
+
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+
+  z-index: 9999999999;
+  opacity: 0.6;
+
+  .arrow {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+}
+
+.modals_layer__btn-next:hover {
+  opacity: 1;
+  -webkit-transform: rotate(45deg) scale(1.1);
+  transform: rotate(45deg) scale(1.1);
+}
+
+.modals_layer__btn-prev:hover {
+  opacity: 1;
+  -webkit-transform: rotate(-45deg) scale(1.1);
+  transform: rotate(-45deg) scale(1.1);
+}
+
+.modals_layer__btn-prev {
+  @include rotate(-45);
+  left: 20px;
+
+  .arrow {
+    border-top: 5px solid white;
+    border-left: 5px solid white;
+  }
+}
+
+.modals_layer__btn-next {
+  @include rotate(45);
+  right: 20px;
+
+  .arrow {
+    border-top: 5px solid white;
+    border-right: 5px solid white;
+  }
+}
+
+@media all and (max-width: $tablet-max-width) {
+  .modals_layer__btn-prev,
+  .modals_layer__btn-next {
+    width: 20px;
+    height: 20px;
+    .arrow {
+      top: 0;
+      left: 0;
+      border-top: 5px solid white;
+    }
+  }
+
+  .modals_layer__btn-prev .arrow {
+    border-right: none;
+    border-left: 5px solid white;
+  }
+
+  .modals_layer__btn-next .arrow {
+    border-left: none;
+    border-right: 5px solid white;
+  }
+
+  .modals_layer__btn-next {
+    right: 20px;
+  }
+
+  .modals_layer__btn-prev {
+    left: 20px;
+  }
+}
+
+@media all and (max-width: $mobile-max-width) {
+  .modals_layer__btn-next {
+    right: 12px;
+  }
+
+  .modals_layer__btn-prev {
+    left: 12px;
+  }
+}

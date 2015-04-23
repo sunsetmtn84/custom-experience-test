@@ -1,0 +1,500 @@
+@import 'templates/mixins';
+@import 'templates/easing';
+
+@mixin indicatorBase() {
+  position:absolute;
+}
+
+@mixin ringAnim() {
+  0%, 10% {
+    @include opacity(0);
+    @include scale(1);
+  }
+  20% {
+    @include opacity(1);
+    @include scale(1);
+  }
+  100% {
+    @include opacity(0);
+    @include scale(1.8);
+  }
+}
+
+@-webkit-keyframes ringGrow {
+  @include ringAnim();
+}
+
+@keyframes ringGrow {
+  @include ringAnim();
+}
+
+@mixin indicatorPulsingCircle() {
+  // this gives us two ways of using these mixins
+  .indicator.pulsing_circle,
+  &.pulsing_circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: white;
+
+    .outer-ring {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid white;
+      margin-left: -12px;
+      margin-top: -12px;
+      @include animation(ringGrow 900ms infinite);
+    }
+  }
+}
+
+@mixin indicatorSpinner() {
+  .indicator.spinner,
+  &.spinner {
+    width:10px;
+    height:10px;
+    border-radius:100%;
+
+    &::before{
+      -webkit-animation-name: indicator-spinner-2, indicator-spinner-3;
+      animation-name: indicator-spinner-2, indicator-spinner-3;
+      -webkit-animation-duration: 5s, 0.75s;
+      animation-duration: 5s, 0.75s;
+      -webkit-animation-iteration-count: infinite, infinite;
+      animation-iteration-count: infinite, infinite;
+      -webkit-animation-timing-function: ease, linear;
+      animation-timing-function: ease, linear;
+      -webkit-animation-fill-mode: forwards;
+      animation-fill-mode: forwards;
+      position: absolute;
+      top: 50%;
+      left: -30px;
+      margin: -4px 0 0 0;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(222, 148, 182, 0.3);
+      content: '';
+      opacity: 0;
+      -webkit-transform-origin: 35px 50%;
+      transform-origin: 35px 50%;
+    }
+
+    &::after {
+      -webkit-animation: indicator-spinner 5s forwards;
+      animation: indicator-spinner 5s forwards;
+      -webkit-animation-iteration-count: infinite, infinite;
+      animation-iteration-count: infinite, infinite;
+      content: '';
+      border: 8px solid rgba(111, 148, 182, 0.2);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: -35px 0 0 -35px;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      content: '';
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+}
+
+@mixin indicatorSonar() {
+  .indicator.sonar,
+  &.sonar {
+    &::after {
+      -webkit-animation: indicator-sonar 1s ease-out forwards;
+      animation: indicator-sonar 1s ease-out forwards;
+      -webkit-animation-iteration-count: infinite, infinite;
+      animation-iteration-count: infinite, infinite;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: -35px 0 0 -35px;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      content: '';
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+}
+
+@mixin indicatorHypnotic() {
+  .indicator.hypnotic,
+  &.hypnotic {
+    // width: 10px;
+    // height: 10px;
+    border-radius:100%;
+
+    &::before,
+    &::after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: -25px 0 0 -25px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      content:'';
+      opacity: 0;
+      pointer-events: none;
+      -webkit-animation-delay: 0s!important;
+      animation-delay: 0s!important;
+      -webkit-animation-name: indicator-hypnotic-2, indicator-hypnotic-1;
+      animation-name:indicator-hypnotic-2, indicator-hypnotic-1;
+      -webkit-animation-duration: 0.8s;
+      animation-duration: 0.8s;
+      -webkit-animation-iteration-count: infinite;
+      animation-iteration-count: infinite;
+      -webkit-animation-timing-function: ease-out;
+      animation-timing-function: ease-out;
+      -webkit-animation-fill-mode: forwards;
+      animation-fill-mode: forwards;
+    }
+
+    &::after {
+      -webkit-animation-delay: 0.4s!important;
+      animation-delay: 0.4s!important;
+      margin: -25px 0 0 -25px;
+      width: 50px;
+      height: 50px;
+    }
+  }
+}
+
+@mixin indicatorStaticCircle() {
+  .indicator.static_circle,
+  &.static_circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    // fpo
+    background-color: rgba(255,255,255,0.7);
+  }
+}
+
+@mixin indicatorCustomAsset() {
+  // TODO: eventually we want the size of this to come from data
+  .indicator.custom,
+  &.custom {
+    width: 30px;
+    height: 30px;
+    background-size: contain;
+  }
+}
+
+
+
+@mixin scaleUpAndDown() {
+  0%, 100% {
+    @include scale(1);
+  }
+  50% {
+    @include scale(2.5);
+  }
+}
+@-webkit-keyframes scaleUpAndDown {
+  @include scaleUpAndDown();
+}
+@keyframes scaleUpAndDown {
+  @include scaleUpAndDown();
+}
+
+@mixin scaleDown() {
+  0% {
+  }
+  100% {
+    @include scale(2);
+  }
+}
+@-webkit-keyframes scaleDown {
+  @include scaleDown();
+}
+@keyframes scaleDown {
+  @include scaleDown();
+}
+
+
+@mixin downCaret() {
+  0% {
+    margin-top: -10px;
+  }
+  100% {
+    margin-top: -2px;
+  }
+}
+@-webkit-keyframes downCaret {
+  @include downCaret();
+}
+@keyframes downCaret {
+  @include downCaret();
+}
+
+// TODO: improve the outer-circle pulsing animation. kinda sucks right now.
+@mixin indicatorTooltip() {
+  .indicator.tooltip_indicator,
+  &.tooltip_indicator {
+    width: 36px;
+    height: 36px;
+
+    &.active {
+      .tooltip {
+        top: -122px;
+        @include opacity(1);
+        @include scale(1);
+
+        // caret
+        &:after {
+          @include animation(downCaret 150ms $easeOut 200ms both);
+        }
+      }
+
+      .outer-circle {
+        @include animation(scaleDown 200ms $easeOut 0 both);
+      }
+    }
+
+    $tt-border-radius: 3px;
+
+    .tooltip {
+      position: absolute;
+      top: -80px;
+      left: -55px;
+      width: 140px;
+      height: 115px;
+      border-radius: $tt-border-radius;
+      background: white;
+      @include transform(translate3d(0,0,1));
+      @include box-shadow(0, 0px, 10px, rgba(0,0,0,.36));
+      @include opacity(0);
+      @include scale(0.5);
+
+      @include transition(all 120ms $easeOutQuart);
+
+      .image {
+        background-size: cover;
+        width: 100%;
+        height: 83px; // is what the designs show *shrug*
+        border-top-left-radius: $tt-border-radius;
+        border-top-right-radius: $tt-border-radius;
+      }
+
+      .label {
+        position: absolute;
+        z-index: 2;
+        bottom: 0;
+        left: 0;
+        background-color: white;
+        border-bottom-left-radius: $tt-border-radius;
+        border-bottom-right-radius: $tt-border-radius;
+        color: black;
+        font-size: 12px;
+        font-weight: bold;
+        text-align: center;
+        width: 100%;
+        padding-bottom: 8px;
+      }
+
+      // down-pointing caret
+      &:after {
+        content: "";
+        position: absolute;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        top: 100%;
+        left: 50%;
+        margin-left: -7px;
+        border-top: 10px solid white;
+        margin-top: -10px;
+        z-index: 1;
+      }
+    }
+
+    .outer-circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -6px;
+      margin-top: -6px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1px solid white;
+      background-color: rgba(255, 255, 255, 0.3);
+      @include animation(scaleUpAndDown 1500ms infinite);
+    }
+
+    .inner-circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      @include translate(-50%, -50%);
+
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: white;
+    }
+  }
+}
+
+/* ------------------------------------------------------------ *\
+|* KEYFRAMES
+\* ------------------------------------------------------------ */
+
+// Spinner
+// ------------------------------------------------------------
+@-webkit-keyframes indicator-spinner {
+  0%, 100% {
+    -webkit-transform: scale3d(0, 0, 1);
+    transform: scale3d(0, 0, 1);
+    opacity: 0;
+  }
+  5%, 95% {
+    opacity: 0.1;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes indicator-spinner {
+  0%, 100% {
+    -webkit-transform: scale3d(0, 0, 1);
+    transform: scale3d(0, 0, 1);
+    opacity: 0;
+  }
+  5%, 95% {
+    opacity: 0.1;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@-webkit-keyframes indicator-spinner-2 {
+  0%, 5%, 95%, 100% {
+    opacity: 0;
+  }
+  10%, 90% {
+    opacity: 0.2;
+  }
+}
+
+@keyframes indicator-spinner-2 {
+  0%, 5%, 95%, 100% {
+    opacity: 0;
+  }
+  10%, 90% {
+    opacity: 0.2;
+  }
+}
+
+@-webkit-keyframes indicator-spinner-3 {
+  100% {
+    -webkit-transform: rotate3d(0, 0, 1, 360deg);
+    transform: rotate3d(0, 0, 1, 360deg);
+  }
+}
+
+@keyframes indicator-spinner-3 {
+  100% {
+    -webkit-transform: rotate3d(0, 0, 1, 360deg);
+    transform: rotate3d(0, 0, 1, 360deg);
+  }
+}
+
+// Sonar
+// ------------------------------------------------------------
+@-webkit-keyframes indicator-sonar {
+  0% {
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.5);
+    opacity: 0;
+    -webkit-transform: scale3d(0.6, 0.6, 1);
+    transform: scale3d(0.6, 0.6, 1);
+  }
+  49%{
+    opacity:0;
+  }
+  50% {
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.3);
+    opacity: 1;
+    -webkit-transform: scale3d(0.6, 0.6, 1);
+    transform: scale3d(0.6, 0.6, 1);
+  }
+  100% {
+    box-shadow: 0 0 0 100px rgba(255,255,255,0);
+    opacity: 0;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes indicator-sonar {
+  0% {
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.3);
+    opacity: 0;
+    -webkit-transform: scale3d(0.6, 0.6, 1);
+    transform: scale3d(0.6, 0.6, 1);
+  }
+  49%{
+    opacity:0;
+  }
+  50% {
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.3);
+    opacity: 1;
+    -webkit-transform: scale3d(0.6, 0.6, 1);
+    transform: scale3d(0.6, 0.6, 1);
+  }
+  100% {
+    box-shadow: 0 0 0 100px rgba(255,255,255,0);
+    opacity: 0;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+// hypnotic
+// ------------------------------------------------------------
+@-webkit-keyframes indicator-hypnotic-1 {
+  0%, 100% {
+    opacity: 0;
+  }
+  40%, 60% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes indicator-hypnotic-1 {
+  0%, 100% {
+    opacity: 0;
+  }
+  40%, 60% {
+    opacity: 0.4;
+  }
+}
+
+@-webkit-keyframes indicator-hypnotic-2 {
+  0% {
+    -webkit-transform: scale3d(0.5, 0.5, 1);
+    transform: scale3d(0.5, 0.5, 1);
+  }
+  100% {
+    -webkit-transform: scale3d(1.4, 1.4, 1);
+    transform: scale3d(1.4, 1.4, 1);
+  }
+}
+
+@keyframes indicator-hypnotic-2 {
+  0% {
+    -webkit-transform: scale3d(0.5, 0.5, 1);
+    transform: scale3d(0.5, 0.5, 1);
+  }
+  100% {
+    -webkit-transform: scale3d(1.4, 1.4, 1);
+    transform: scale3d(1.4, 1.4, 1);
+  }
+}

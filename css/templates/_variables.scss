@@ -1,0 +1,42 @@
+// Common fonts
+$helv: "Helvetica", "Arial", sans-serif;
+$sans-serif: $helv;
+
+// colors
+$white: #fff;
+$black: #000;
+$gray-lt: #cfdadd;
+
+// Old Breakpoints (will remove eventually)
+$mobile-max-width: 615px; // would've liked 640 but, can't. mraid or android devices with control bars or some shit.
+$mobile-landscape-min-width: $mobile-max-width;
+$tablet-min-width: 768px;
+$tablet-max-width: 1024px;
+$desktop-min-width: 1025px;
+
+
+// NEW Breakpoints - used by Carousel, FilmStrip, Stack, CoverFlow layouts
+$min-mobile-width:    320px;
+$min-tablet-width:    580px;
+$min-desktop-width:   800px;
+
+// NEW card-style content block widths
+$mobile-block-width:    320px;
+$tablet-block-width:    500px;
+$desktop-block-width:   720px;
+$mobile-block-height:   $mobile-block-width/2;
+$tablet-block-height:   $tablet-block-width/2;
+$desktop-block-height:  $desktop-block-width/2;
+
+
+// common z-indices
+$vjs-z: 1000;
+$annotations-z: 9999; //they vary to allow z-axis ordering, but that's the highest possible
+
+$zindex-indicator:        $vjs-z - 10;
+$zindex-status-bar:       $vjs-z + 1;
+$zindex-mobile-rotate:    $vjs-z + 2;
+$zindex-social-overlay:   $annotations-z + 100;
+$zindex-splash-screen:    $annotations-z + 200;
+
+$zindex-mocha-reports:    $annotations-z + 999;

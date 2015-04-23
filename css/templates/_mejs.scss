@@ -1,0 +1,113 @@
+// TODO: use vars for z-index values
+// TODO: Many of these styles may be deprecated ... 
+
+
+
+.mejs-container .mejs-controls {
+  z-index: 999999;
+}
+
+
+
+.mejs-overlay-button {
+  display: none;
+}
+
+
+
+/*------------------------------------*\
+    $POPUP LAYER
+\*------------------------------------*/
+.mejs-dialog {
+  height: 1px !important;
+  display: block;
+  top: 0px;
+  left: 0px;
+  z-index: 9998;
+}
+
+.mejs-dialog .popup {
+  z-index: 9998;
+  position: absolute;
+  top: -1000px;
+}
+
+
+
+/*------------------------------------*\
+    $BUBBLE
+\*------------------------------------*/
+.mejs-dialog .bubble-popup .cover-popup {
+  position: relative;
+}
+
+.mejs-dialog .bubble-popup .cover-popup .body {
+  height: 188px;
+}
+
+.mejs-dialog .bubble-popup .cover-popup .product-info {
+  margin-left: 10px;
+  margin-right: 5px;
+  display: inline-block;
+  line-height: 26px;
+  color: #FFFFFF;
+  font-weight: bold;
+}
+
+.mejs-dialog .bubble-popup .cover-popup .title {
+  font-size: 16px;
+  overflow: hidden;
+  text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.7);
+}
+
+.mejs-dialog .bubble-popup .cover-popup .subtitle {
+  font-size: 24px;
+  text-shadow: 0px 0px 16px rgba(0, 0, 0, 0.7);
+}
+
+.embed .mejs-dialog .bubble-popup .cover-popup .title {
+  font-size: 10pt;
+  text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.7);
+}
+
+.embed .mejs-dialog .bubble-popup .cover-popup .subtitle {
+  font-size: 22pt;
+  text-shadow: 0px 0px 12px rgba(0, 0, 0, 0.7);
+}
+
+.mejs-dialog .bubble-popup.flip-bubble-left .subtitle {
+  text-align: right;
+  margin-right: 30px;
+}
+
+
+
+/*------------------------------------*\
+    $ANNOTATIONS
+\*------------------------------------*/
+.mejs-annotations {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 0px;
+  z-index: 9;
+}
+
+.mejs-annotations .rect {
+  position: absolute;
+  color: white;
+  z-index: 9;
+  display: none;
+  text-align: center;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.mejs-layers .rect.hover {
+  background-image: none;
+}
+
+.mejs-layers.on-hover.on-pause .mejs-cursor {
+  display: block !important;
+}

@@ -1,0 +1,162 @@
+@import 'templates/mixins';
+
+// TODO: would be nice to eventually make all these
+//        animations mixins with params
+.pulse {
+  @include animation(pulse 400ms normal);
+}
+
+.double-pulse {
+  @include animation(doublePulse 400ms normal);
+}
+
+.bounce {
+  @include animation(bounce 400ms normal);
+}
+
+.nudge-right {
+  @include animation(nudgeRight 800ms)
+}
+
+
+@-webkit-keyframes nudgeRight {
+  0%, 50%, 100% {
+    margin-left: 0px;
+  }
+  25%, 75% {
+    margin-left: 10px;
+  }
+}
+@-moz-keyframes nudgeRight {
+  0%, 50%, 100% {
+    margin-left: 0px;
+  }
+  25%, 75% {
+    margin-left: 10px;
+  }
+}
+@keyframes nudgeRight {
+  0%, 50%, 100% {
+    margin-left: 0px;
+  }
+  25%, 75% {
+    margin-left: 10px;
+  }
+}
+
+
+@-webkit-keyframes shakeRight {
+  0%, 100% {
+    -webkit-transform: rotate(45deg) translate3d(0, 0, 0);
+  }
+  20%, 60% {
+    -webkit-transform: rotate(45deg) translate(-5px,5px);
+  }
+  40%, 80%{
+    -webkit-transform: rotate(45deg) translate(5px,-5px);
+  }
+}
+@-moz-keyframes shakeRight {
+  0%, 100% {
+    -moz-transform: rotate(45deg) translate3d(0, 0, 0);
+  }
+  20%, 60% {
+    -moz-transform: rotate(45deg) translate(-5px,5px);
+  }
+  40%, 80%{
+    -moz-transform: rotate(45deg) translate(5px,-5px);
+  }
+}
+@keyframes shakeRight {
+  0%, 100% {
+    transform: rotate(45deg) translate3d(0, 0, 0);
+  }
+  20%, 60% {
+    transform: rotate(45deg) translate(-5px,5px);
+  }
+  40%, 80%{
+    transform: rotate(45deg) translate(5px,-5px);
+  }
+}
+
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-transform: scale3d(1, 1, 1);
+  }
+  40% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1);
+    border-color:rgba(255,255,255,0.4); //?
+  }
+  100% {
+    -webkit-transform: scale3d(1, 1, 1);
+  }
+}
+@-moz-keyframes pulse {
+  0% {
+    -moz-transform: scale3d(1, 1, 1);
+  }
+  40% {
+    -moz-transform: scale3d(1.1, 1.1, 1.1);
+    border-color:rgba(255,255,255,0.4);
+  }
+  100% {
+    -moz-transform: scale3d(1, 1, 1);
+  }
+}
+@keyframes pulse {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+  40% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+
+
+@-webkit-keyframes doublePulse {
+  0%, 50%, 100% {
+    -webkit-transform: scale3d(1, 1, 1);
+  }
+  25%, 75% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1);
+  }
+}
+@-moz-keyframes doublePulse {
+  0%, 50%, 100% {
+    -moz-transform: scale3d(1, 1, 1);
+  }
+  25%, 75% {
+    -moz-transform: scale3d(1.1, 1.1, 1.1);
+  }
+}
+@keyframes doublePulse {
+  0%, 50%, 100% {
+    transform: scale3d(1, 1, 1);
+  }
+  25%, 75% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+}
+
+
+
+@-webkit-keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {-webkit-transform:translateX(-105%);}
+    40% {-webkit-transform: translateX(-111%);}
+    60% {-webkit-transform: translateX(-108%);}
+}
+@-moz-keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {-moz-transform:translateX(-105%);}
+    40% {-moz-transform: translateX(-111%);}
+    60% {-moz-transform: translateX(-108%);}
+}
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform:translateX(-105%);}
+    40% {transform: translateX(-111%);}
+    60% {transform: translateX(-108%);}
+}

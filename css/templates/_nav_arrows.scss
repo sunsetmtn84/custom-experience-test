@@ -1,0 +1,366 @@
+// TODO: once the studio preview is settled, get rid of these double definitions (ex.: .nav-arrow, &)
+
+@mixin navArrowBase() {
+  .nav-arrow,
+  & {
+    position:absolute;
+    right:0;
+
+    .nav-arrow-inner{
+      transition: all 120ms linear;
+    }
+  }
+}
+
+@mixin navArrowFat() {
+  // this gives us two ways of using these mixins
+  .nav-arrow.nav-arrow-style-fat,
+  &.nav-arrow-style-fat {
+    top:-3px;
+    @include leftArrowFlip();
+
+    .nav-arrow-inner {
+      @include transform(rotate(45deg) translateZ(1px));
+      margin: 8px;
+      padding: 10px;
+      width: 20px;
+      height: 20px;
+      border-right: 10px solid white;
+      border-top: 10px solid white;
+    }
+  }
+}
+
+@mixin navArrowThin() {
+  .nav-arrow.nav-arrow-style-thin,
+  &.nav-arrow-style-thin {
+    @include leftArrowFlip();
+
+    .nav-arrow-inner {
+      @include transform(rotate(45deg));
+      margin: 8px;
+      padding: 10px;
+      width: 20px;
+      height: 20px;
+      border-right: 2px solid white;
+      border-top: 2px solid white;
+    }
+  }
+}
+
+@mixin navArrowStretched() {
+  .nav-arrow.nav-arrow-style-stretched,
+  &.nav-arrow-style-stretched {
+    right: 0px;
+    cursor:pointer;
+    position:relative;
+    top:-10px;
+    @include leftArrowFlip();
+
+    svg {
+      display: block;
+      margin: 0 auto;
+      padding: 0;
+    }
+    .icon-wrap {
+      display: block;
+      width: 32px;
+      height: 64px;
+
+      &::after{
+        right:20px;
+        position: absolute;
+        top: 49%;
+        width: 20px;
+        height: 2px;
+        background: #fff;
+        content: '';
+        -webkit-transition: width 0.3s 0.2s;
+        transition: width 0.3s 0.2s;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+      }
+    }
+
+    .arrow-tooltip {
+      position: absolute;
+      top: 37%;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-align: end;
+      width: 170px;
+      pointer-events: none;
+      -webkit-box-align: end;
+      -webkit-align-items: flex-end;
+      align-items: flex-end;
+      left:-80px;
+
+      &.prev {
+        -webkit-transform: translateY(-50%) scaleX(-1);
+        transform: translateY(-50%) scaleX(-1);
+        left:-170px;
+        &::after {
+          content: 'Prev';
+        }
+      }
+
+      &::after {
+        content: 'Next';
+        position: absolute;
+        top: 100%;
+        left: 0;
+        margin: 20px 5px 0;
+        width: 100%;
+        color: #fff;
+        text-transform: uppercase;
+        letter-spacing: 10px;
+        font-weight: 300;
+        font-size:14px;
+        opacity: 0;
+        -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+        transition: transform 0.3s, opacity 0.3s;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+      }
+    }
+
+    &.left-arrow .tooltip::after {
+      content: 'Next';
+    }
+
+    &:hover {
+      .arrow-tooltip::after {
+        opacity: 1;
+        -webkit-transition-delay: 0.2s;
+        transition-delay: 0.2s;
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+      }
+      .icon-wrap:after{
+        width:110px;
+      }
+    }
+  }
+}
+
+@mixin navArrowSqueeze() {
+  .nav-arrow.nav-arrow-style-squeeze,
+  &.nav-arrow-style-squeeze {
+    height:100px;
+    width:80px;
+    margin-left:-20px;
+    margin-top:-30px;
+    position: relative;
+    @include leftArrowFlip();
+
+    a {
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      top: 50%;
+      display: block;
+      outline: none;
+      text-align: left;
+      z-index: 1000;
+      -webkit-transform: translateY(-50%);
+      transform: translateY(-50%);
+      left: 10px;
+    }
+
+    a::after,
+    .icon-wrap::after {
+      top: 52%;
+      -webkit-transform: translateX(-50%) rotate(135deg);
+      transform: translateX(-50%) rotate(135deg);
+      -webkit-transform-origin: 50% 0%;
+      transform-origin: 50% 0%;
+    }
+
+    a::before,
+    .icon-wrap::before {
+      top: 50%;
+      -webkit-transform: translateX(-50%) rotate(45deg);
+      transform: translateX(-50%) rotate(45deg);
+      -webkit-transform-origin: 0 0;
+      transform-origin: 0 0;
+    }
+
+    .icon-wrap::after,
+    .icon-wrap::before {
+      z-index: 100;
+      height: 0;
+      background: #fff;
+      -webkit-transition: height 0.3s, -webkit-transform 0.3s;
+      transition: height 0.3s, transform 0.3s;
+    }
+
+    a::after,
+    a::before,
+    .icon-wrap::after,
+    .icon-wrap::before {
+      position: absolute;
+      left: 50%;
+      width: 3px;
+      height: 50%;
+      background: #566475;
+      content: '';
+      -webkit-transition: -webkit-transform 0.3s;
+      transition: transform 0.3s;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      outline: 1px solid transparent;
+    }
+
+    a:hover::after,
+    a:hover .icon-wrap::after {
+      -webkit-transform: translateX(-50%) rotate(125deg);
+      transform: translateX(-50%) rotate(125deg);
+    }
+
+    a:hover::before,
+    a:hover .icon-wrap::before {
+      -webkit-transform: translateX(-50%) rotate(55deg);
+      transform: translateX(-50%) rotate(55deg);
+    }
+
+    a h3 {
+      left: 0;
+      -webkit-transform: translateY(-50%) translateX(-90%);
+      transform: translateY(-50%) translateX(-90%);
+
+      &.flip{
+        -webkit-transform: translateY(-50%) translateX(-90%) scale(-1,1);
+        transform: translateY(-50%) translateX(-90%) scale(-1,1);
+      }
+    }
+
+    a:hover h3 {
+      opacity: 1;
+      -webkit-transform: translateY(-50%) translateX(-100%);
+      transform: translateY(-50%) translateX(-100%);
+
+      &.flip{
+        -webkit-transform: translateY(-50%) translateX(-100%)  scale(-1,1);
+        transform: translateY(-50%) translateX(-100%)  scale(-1,1);
+      }
+    }
+
+    h3 {
+      position: absolute;
+      top: 50%;
+      margin: 0;
+      color: #fff;
+      text-transform: uppercase;
+      font-weight: 300;
+      font-size: 0.85em;
+      opacity: 0;
+      -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+      transition: transform 0.3s, opacity 0.3s;
+      font-size:10px;
+
+      strong{
+        display: block;
+      }
+    }
+  }
+}
+
+@mixin navArrowDouble() {
+  .nav-arrow.nav-arrow-style-double,
+  &.nav-arrow-style-double {
+    top:5px;
+    right:5px;
+    @include leftArrowFlip();
+  }
+}
+
+// AK: omitted until the option is added back through studio -- think we may be dropping this one.
+// @mixin navArrowTallPreview() {
+//   .nav-arrow.nav-arrow-styletall-previewe,
+//   &.nav-arrow-style-tall-preview {
+//     overflow: hidden;
+//     width: 60px;
+//     height: 300px;
+//     margin-top:-150px;
+//     right:-10px;
+
+//     > a{
+//       height:100%;
+//       width:100%;
+//       display: inline-block;
+//       background-color: transparent;
+//       -webkit-transition: background-color 0.3s;
+//       transition: background-color 0.3s;
+
+
+//       &:hover{
+//         .preview-img  {
+//           opacity: 0.6;
+//           -webkit-transform: translateX(0);
+//           transform: translateX(0);
+//         }
+//         .icon-wrap {
+//           -webkit-transform: translateY(-50%) translateX(-15px);
+//           transform: translateY(-50%) translateX(-15px);
+//         }
+//       }
+//     }
+
+//     .icon-wrap {
+//       position: relative;
+//       top: 50%;
+//       z-index: 100;
+//       display: block;
+//       margin: 0 auto;
+//       padding: 30px;
+//       -webkit-transition: -webkit-transform 0.3s;
+//       transition: transform 0.3s;
+//       line-height: 0px;
+
+//       -webkit-transform: translateY(-50%) translateX(-25px);
+//       transform: translateY(-50%) translateX(-25px);
+
+//       > svg{
+//         margin-top:5px;
+//       }
+//     }
+//     .preview-img {
+//       right: 0;
+//       -webkit-transform: translateX(-100%);
+//       transform: translateX(-100%);
+//       position: absolute;
+//       top: 0;
+//       min-width: 100%;
+//       min-height: 100%;
+//       opacity: 0;
+//       -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+//       transition: opacity 0.3s, transform 0.3s;
+//     }
+
+//     &.left-arrow{
+//       left:-20px;
+//       right:auto;
+//       .preview-img {
+//         -webkit-transform: translateX(-100%) rotate(180deg);
+//         transform: translateX(-100%) rotate(180deg);
+//       }
+//       > a:hover{
+//         .preview-img  {
+//           opacity: 0.6;
+//           -webkit-transform: translateX(0) rotate(180deg);
+//           transform: translateX(0) rotate(180deg);
+//         }
+//       }
+//     }
+//   }
+// }
+
+// util method
+@mixin leftArrowFlip() {
+  &.left-arrow {
+    @include transform(scaleX(-1) translateZ(1px));
+    right: auto;
+  }
+}

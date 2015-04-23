@@ -1,0 +1,140 @@
+
+@mixin fontFace($name, $weight:normal, $style:normal) {
+  @font-face {
+    font-family: $name;
+    src: url('../fonts/'+$name'+.eot');
+    src: url('../fonts/'+$name+'.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/'+$name+'.woff') format('woff'),
+         url('../fonts/'+$name+'.ttf') format('truetype'),
+         url('../fonts/'+$name+'.svg#'+$name+'_ui') format('svg');
+    font-weight: $weight;
+    font-style: $style;
+  }
+}
+
+@mixin fontFaceAbsolute($name, $woff, $ttf) {
+  @font-face {
+    font-family: $name;
+    src:  url($woff) format('woff'),    // Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+
+          url($ttf) format('truetype'); // Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5
+
+  }
+}
+
+@mixin box-shadow($top, $left, $blur, $color, $inset: false) {
+  @if $inset {
+    -webkit-box-shadow:inset $top $left $blur $color;
+    -moz-box-shadow:inset $top $left $blur $color;
+    box-shadow:inset $top $left $blur $color;
+  } @else {
+    -webkit-box-shadow: $top $left $blur $color;
+    -moz-box-shadow: $top $left $blur $color;
+    box-shadow: $top $left $blur $color;
+  }
+}
+
+@mixin animation($anim) {
+  -webkit-animation: $anim;
+  -moz-animation: $anim;
+  -ms-animation: $anim;
+  -o-animation: $anim;
+  animation: $anim;
+}
+
+@mixin opacity($value){
+  $IEValue: $value*100;
+  opacity: $value;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity="+$IEValue+")";
+  filter: alpha(opacity=$IEValue);
+}
+@mixin transition($transitions...) {
+    -webkit-transition: $transitions;
+    -moz-transition: $transitions;
+    -ms-transition: $transitions;
+    -o-transition: $transitions;
+    transition: $transitions;
+}
+
+@mixin absoluteVCenter {
+	position: absolute;
+	top:50%;
+	-webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+
+
+
+// generic transform
+@mixin transform($transforms...) {
+	   -moz-transform: $transforms;
+	     -o-transform: $transforms;
+	    -ms-transform: $transforms;
+	-webkit-transform: $transforms;
+          transform: $transforms;
+}
+// rotate
+@mixin rotate ($deg) {
+  @include transform(rotate(#{$deg}deg));
+}
+
+// scale
+@mixin scale($scale) {
+	 @include transform(scale($scale));
+}
+// translate
+@mixin translate ($x, $y) {
+   @include transform(translate($x, $y));
+}
+// skew
+@mixin skew ($x, $y) {
+   @include transform(skew(#{$x}deg, #{$y}deg));
+}
+//transform origin
+@mixin transform-origin ($origin) {
+    moz-transform-origin: $origin;
+	     -o-transform-origin: $origin;
+	    -ms-transform-origin: $origin;
+	-webkit-transform-origin: $origin;
+          transform-origin: $origin;
+}
+
+
+@mixin grayscale( $toggle: "on", $percentage: 1 ) {
+    $svg-type: "matrix";
+    $svg-value: "0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0";
+    $ie-alpha: alpha(#{"opacity="}round( $percentage * 100 ) );
+
+    @if $percentage != 1 {
+        $svg-type: "saturate";
+        $svg-value: $percentage;
+    }
+
+    @if $toggle == "on" {
+        filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'#{$svg-type}\' values=\'#{$svg-value}\'/></filter></svg>#grayscale"); // Firefox 10+, Firefox on Android
+        filter: gray $ie-alpha; // IE6-9
+        -webkit-filter: grayscale( round( $percentage * 100% ) ); // Chrome 19+, Safari 6+, Safari 6+ iOS
+        filter: grayscale( round( $percentage * 100% ) ); // Catch-all
+    }
+
+    @if $toggle == "off" {
+        @if $svg-type == "saturate" {
+            filter: none;
+        } @else {
+            filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0\'/></filter></svg>#grayscale");
+        }
+        -webkit-filter: grayscale(0%);
+        filter: grayscale(0);
+    }
+}
+
+
+@mixin activeShow() {
+  display: none;
+  &.active {
+    display: block;
+  }
+}

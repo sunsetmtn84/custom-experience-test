@@ -1,0 +1,92 @@
+//TODO: generalize and abstract further
+
+.splash-screen {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0; left: 0;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 0;
+  cursor: pointer;
+  background-color: black;
+
+  &.show-splash {
+    display: block;
+  }
+}
+
+.splash__text{
+  position: absolute;
+  top: 45%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  transform:translateY(-50%);
+  width:100%;
+  height:50%;
+  text-align: center;
+}
+
+.splash__text > div{
+  clear: both;
+  display: block;
+  position: relative;
+  width:100%;
+  color:white;
+}
+
+
+// Title, Subtitle, Play Btn, and Inner (image) are here
+.splash__title {
+  margin-bottom:10px;
+  height: 50%;
+}
+
+.splash__title__inner {
+  // extend with background-image url
+  background-position:center center;
+  background-size:contain;
+  background-repeat: no-repeat;
+  height: 100%;
+}
+
+.splash__subtitle{
+  font-size: 28px;
+  font-weight: bold;
+  margin:10px 0;
+  letter-spacing: 0.1em;;
+}
+
+.splash__cta {
+  letter-spacing: 0.01em;
+}
+
+.splash__btn-play-wrapper{
+  margin:0 0 3% 0;
+  height:70px;
+}
+
+.splash__btn-play{
+  height:60px;
+  width:60px;
+  transition: background-color 150ms linear;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: inline-block;
+  border:2px solid rgba(255,255,255,1);
+  border-radius: 100%;
+  padding:15px 0 0 5px;
+}
+
+
+.splash__btn-play:hover{
+  -webkit-animation-name: pulse;
+  animation-name: pulse;
+  -webkit-animation-direction: forwards;
+  animation-direction: forwards;
+  -webkit-animation-duration: 400ms;
+  animation-duration: 400ms;
+}
+

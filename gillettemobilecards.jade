@@ -1,0 +1,198 @@
+- var ui = project.ui_attributes;
+
+link(rel="stylesheet",type="text/css",href="#{ui_folder_path}css/gillettemobilecards.css")
+
+if project.ui_attributes.splash_screen_url
+  style.
+    .splash-screen {
+      background-image: url(#{ui.splash_screen_url});
+    }
+
+script(type='text/template', id='gillette_indicator_template').
+  <div class="indicator">
+    <div class='outer-ring'></div>
+  </div>
+
+
+#template_container.gmc
+
+  #rotate-device-msg
+    svg#rotate-svg(xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink', version='1.1', x='0px', y='0px', viewBox='0 0 44 34', enable-background='new 0 0 44 34', xml:space='preserve')
+      path(fill-rule='evenodd', clip-rule='evenodd', d='M26.2,12.3c3.8,0,6.8,3.1,6.9,6.8h-2.4c-0.7,0-1.3,0.6-1.3,1.4  c0,0.3,0.1,0.6,0.3,0.8l5.4,7.2c0.8,0.8,1.7,0.8,2.5,0l5.4-7.2c0.2-0.2,0.3-0.5,0.3-0.8c0-0.8-0.6-1.4-1.3-1.4h-2.4  C39.2,11.9,33.4,6,26.2,6V12.3z')
+      path(fill-rule='evenodd', clip-rule='evenodd', d='M1.2,29.4c0,1.4,1.1,2.5,2.5,2.5h16.8c1.4,0,2.5-1.1,2.5-2.5v-25  c0-1.4-1.1-2.5-2.5-2.5H3.7C2.3,1.9,1.2,3,1.2,4.4V29.4z M5.7,5h12.9c0.8,0,1.4,0.6,1.4,1.4v15.3c0,0.8-0.6,1.4-1.4,1.4H5.7  c-0.8,0-1.4-0.6-1.4-1.4V6.4C4.3,5.6,4.9,5,5.7,5z M10.6,27.2c0-0.9,0.7-1.6,1.6-1.6c0.9,0,1.6,0.7,1.6,1.6c0,0.9-0.7,1.6-1.6,1.6  C11.3,28.7,10.6,28,10.6,27.2z')
+    span Rotate device for best experience
+
+
+  style.
+    div#comparison figure {
+      background-size: cover; font-size: 0;
+      width: 100%; height: 100%; margin: 0;
+    }
+    div#comparison figure > img {
+      position: relative; width: 100%;
+    }
+    div#comparison figure div {
+      background-size: cover;
+      position: absolute;
+      width: 50%;
+      box-shadow: 0 5px 10px -2px rgba(0,0,0,0.3);
+      overflow: hidden; bottom: 0; height: 100%;
+    }
+    input[type=range]{
+      -webkit-appearance:none;
+      -moz-appearance:none;
+      position: relative;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: rgba(0,0,255,0);
+      z-index: 99;
+      height:100%;
+    }
+    input[type=range]:focus { outline: none; }
+    input[type=range]:active { outline: none; }
+    input[type=range]::-moz-range-track {
+      -moz-appearance:none;
+      height: 60px;
+      width: 100%;
+      background-color: rgba(255,255,255,0.1);
+      position: relative;
+      outline: none;
+    }
+    input[type=range]::active {
+      border: none;
+      outline: none;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance:none;
+      width: 20px;
+      height: 60px;
+      background: #ff6c00;
+      border-radius: 0;
+      z-index: 999;
+      -webkit-box-shadow: 10px 10px 5px -9px rgba(0,0,0,0.75);
+      -moz-box-shadow: 10px 10px 5px -9px rgba(0,0,0,0.75);
+      box-shadow: 10px 10px 5px -9px rgba(0,0,0,0.75);
+    }
+    input[type=range]::-webkit-slider-thumb:after{
+      content:'';
+      position: absolute;
+      height:10px;
+      width:10px;
+      height:99%;
+      margin-left:10px;
+      width:1px;
+      background-color:rgba(255,255,255,0.8);
+      top:0;
+      z-index: -1;
+    }
+    #comparison.show-tooltip input[type=range]::-webkit-slider-thumb:before{
+      width:213px;
+      height:61px;
+      position: absolute;
+      content:'';
+      left:50%;
+      -webkit-transform: translateX(-105%);
+      transform: translateX(-105%);
+    }
+    @media only screen
+    and (max-device-width : 580px)
+    and (orientation : portrait) {
+      #comparison.show-tooltip input[type=range]::-webkit-slider-thumb:before{
+        width:120px;
+        background-size:contain;
+        background-repeat:no-repeat;
+        background-position:center center;
+      }
+    }
+    #comparison.show-tooltip.animated-bounce input[type=range]::-webkit-slider-thumb:before{
+      -webkit-animation-duration: 1s;
+      animation-duration: 1s;
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
+      -webkit-animation-name: bounce;
+      animation-name: bounce;
+    }
+    input[type=range]::-moz-range-thumb {
+      -moz-appearance: none;
+      width: 20px;
+      height: 60px;
+      background: #ff6c00;
+      border-radius: 0;
+      z-index: 999;
+    }
+    input[type=range]:focus::-webkit-slider-thumb {
+      background: rgba(255,255,255,0.5);
+    }
+    input[type=range]:focus::-moz-range-thumb {
+      background: rgba(255,255,255,0.5);
+    }
+  include components/splash_screen
+  mixin splash_screen('', '', '')
+
+  include components/status_bar
+  mixin status_bar('', ui.status_bar_initial_mobile, '', ui.status_bar_cta_mobile, '', ui.status_bar_no_items_mobile)
+
+  .cards-layer
+
+    .cards-scrim
+
+    .card-nav.nav-left
+      .arrow
+    .card-nav.nav-right
+      .arrow
+
+    - each item in project.items
+      //- render nothing for link-out item types
+      unless item.attributes.content_type == 'link'
+
+        case item.attributes.content_type
+          when 'card'
+            .card(data-item-id='#{item._id}', class="#{item.attributes.content_type}", style="background-image: url(#{item.attributes.image})")
+              .btn-close
+                svg#Layer_1(xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink', version='1.1', x='0px', y='0px', viewBox='0 0 44 44', enable-background='new 0 0 44 44', xml:space='preserve')
+                  g
+                    path(fill='#2A2D2F', d='M22,43C10.4,43,1,33.6,1,22C1,10.4,10.4,1,22,1c11.6,0,21,9.4,21,21C43,33.6,33.6,43,22,43z')
+                    path(fill='#565656', d='M22,2c11,0,20,9,20,20s-9,20-20,20C11,42,2,33,2,22S11,2,22,2 M22,0C9.8,0,0,9.8,0,22s9.8,22,22,22   s22-9.8,22-22S34.2,0,22,0L22,0z')
+                  rect(x='10', y='21', transform='matrix(0.7071 0.7071 -0.7071 0.7071 22 -9.1127)', fill='#FFFFFF', width='24', height='2')
+                  rect(x='10', y='21', transform='matrix(0.7071 -0.7071 0.7071 0.7071 -9.1127 22)', fill='#FFFFFF', width='24', height='2')
+              .card-content(style='float: #{item.attributes.card_align}; width:50%')
+                .card-title= item.attributes.title
+                .card-desc= item.attributes.desc
+                .card-cta.btn(data-href='#{item.attributes.cta_url}')= item.attributes.cta_text
+          when 'comparison'
+            .card(data-item-id='#{item._id}', class="#{item.attributes.content_type}")
+              .btn-close
+                svg#Layer_1(xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink', version='1.1', x='0px', y='0px', viewBox='0 0 44 44', enable-background='new 0 0 44 44', xml:space='preserve')
+                  g
+                    path(fill='#2A2D2F', d='M22,43C10.4,43,1,33.6,1,22C1,10.4,10.4,1,22,1c11.6,0,21,9.4,21,21C43,33.6,33.6,43,22,43z')
+                    path(fill='#565656', d='M22,2c11,0,20,9,20,20s-9,20-20,20C11,42,2,33,2,22S11,2,22,2 M22,0C9.8,0,0,9.8,0,22s9.8,22,22,22   s22-9.8,22-22S34.2,0,22,0L22,0z')
+                  rect(x='10', y='21', transform='matrix(0.7071 0.7071 -0.7071 0.7071 22 -9.1127)', fill='#FFFFFF', width='24', height='2')
+                  rect(x='10', y='21', transform='matrix(0.7071 -0.7071 0.7071 0.7071 -9.1127 22)', fill='#FFFFFF', width='24', height='2')
+              #comparison.show-tooltip(style="height:100%")
+                figure(style="background-image:url(#{item.attributes.image_left})")
+                  #divisor(style="background-image:url(#{item.attributes.image_right})")
+                input(type="range", min="0", max="100",value="50", id="slider", oninput="moveDivisor()")
+          when 'video'
+            .card(data-item-id='#{item._id}', class="#{item.attributes.content_type}")
+              .btn-close
+                svg#Layer_1(xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink', version='1.1', x='0px', y='0px', viewBox='0 0 44 44', enable-background='new 0 0 44 44', xml:space='preserve')
+                  g
+                    path(fill='#2A2D2F', d='M22,43C10.4,43,1,33.6,1,22C1,10.4,10.4,1,22,1c11.6,0,21,9.4,21,21C43,33.6,33.6,43,22,43z')
+                    path(fill='#565656', d='M22,2c11,0,20,9,20,20s-9,20-20,20C11,42,2,33,2,22S11,2,22,2 M22,0C9.8,0,0,9.8,0,22s9.8,22,22,22   s22-9.8,22-22S34.2,0,22,0L22,0z')
+                  rect(x='10', y='21', transform='matrix(0.7071 0.7071 -0.7071 0.7071 22 -9.1127)', fill='#FFFFFF', width='24', height='2')
+                  rect(x='10', y='21', transform='matrix(0.7071 -0.7071 0.7071 0.7071 -9.1127 22)', fill='#FFFFFF', width='24', height='2')
+              video#subvideo(style='width:100%;height:100%;background-color:black;')
+                source(src=item.attributes.video_src)
+
+  .indicators-layer
+  script.
+    window.onload = function() {
+      moveDivisor();
+    };
+    divisor = document.getElementById("divisor");
+    slider = document.getElementById("slider");
+    function moveDivisor() { divisor.style.width = slider.value+"%"; }
+
+include ../includes/uinterface_init

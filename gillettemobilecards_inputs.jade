@@ -1,0 +1,62 @@
+//- TODO: Should we abandon this in favor of videoincards_inputs ? 
+
+//- mixins
+include partials/_theme_options_mixin_file_upload
+include partials/_theme_options_mixin_text_input
+include partials/_theme_options_mixin_dropdown_menu
+include partials/_item_mixin_image_upload
+include partials/_item_mixin_file_upload
+include partials/_item_mixin_simple_number
+include partials/_item_mixin_simple_text
+include partials/_item_mixin_simple_textarea
+include partials/_item_mixin_dropdown_menu
+
+//- begin Theme
+include partials/_theme_options_partial_player
+include partials/_theme_options_partial_indicator
+include partials/_theme_options_partial_splash_screen
+include partials/_theme_options_partial_cta
+
+mixin file_upload('Facebook player','fb_player','file','Facebook flash player')
+mixin file_upload('Flash UI','fb_ui','file','Facebook flash UI')
+mixin file_upload('Facebook thumbnail','fb_thumbnail','image','')
+mixin text_input('Subdomain','subdomain','Alternate subdomain (e.g., walmart.fuiszmedia.com )')
+mixin theme_dropdown_menu('Item Cues', 'has_item_cues', ['True', 'False'])
+ 
+//- begin Items
+#item_attributes
+  each item, index in project.items
+    div(id="#{item._id}" class="item-pane #{(index === 0 ? 'active' : '')}")
+      h5= item.name
+      
+      - var _id = item._id.toString()
+      input(id=_id + '-id', name="tags[#{index}][_id]", type='hidden', value=_id)  
+      //- note that 'name' and 'reference' aren't in the attributes object
+      div
+        label.form-label(for="#{item._id}-name") Name
+        input(id="#{item._id}-name",name="tags[#{index}][name]",value=item.name)
+      div
+        label.form-label(for="#{item._id}-ref") Reference
+        input(id="#{item._id}-ref", name="tags[#{index}][reference]",value=item.reference)
+      
+      mixin dropdown_menu(item, index, 'Content Type', 'content_type', ['Card', 'Comparison', 'Video', 'Link'])
+    
+      hr
+      h2 Card (Subscription or Feature)
+      mixin dropdown_menu(item, index, 'Card Alignment', 'card_align', ['Left', 'Right'])
+      mixin image_upload(item, index, 'Image', 'image')
+      mixin simple_text(item, index, 'Title', 'title')
+      mixin simple_textarea(item, index, 'Description', 'desc')
+      mixin simple_text(item, index, 'Button Text', 'cta_text')
+      mixin simple_text(item, index, 'Subscription CTA URL', 'cta_url')
+      hr
+      h2 Comparison
+      mixin image_upload(item, index, 'Image Left', 'image_left')
+      mixin image_upload(item, index, 'Image Right', 'image_right')
+      hr
+      h2 Video
+      mixin item_file_upload(item, index, 'Video Source (MP4)', 'video_src')
+      hr
+      h2 Link  
+      mixin simple_text(item, index, 'Link-Out URL', 'link_out_url', 'http://')
+       
